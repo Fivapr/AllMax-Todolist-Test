@@ -8,11 +8,7 @@ import App from "./App";
 
 const initialState = {};
 
-const store = createStore(
-  rootReducer,
-  initialState,
-  composeWithDevTools(applyMiddleware())
-);
+const store = createStore(rootReducer, initialState, composeWithDevTools());
 
 render(
   <Provider store={store}>
