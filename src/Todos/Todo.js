@@ -33,13 +33,13 @@ class Todo extends Component {
     this.setState({ formVisibility: !this.state.formVisibility });
   };
 
-  changeTodo = todo => {
-    this.props.changeTodo(todo, this.props.index);
-  };
-
   renderChangeForm = () => {
     if (this.state.formVisibility)
       return <AddTodo changeTodo={this.changeTodo} todo={this.props.todo} />;
+  };
+
+  changeTodo = todo => {
+    this.props.changeTodo(todo, this.props.index);
   };
 
   render() {
