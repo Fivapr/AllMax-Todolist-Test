@@ -20,3 +20,8 @@ export const MAKE_COMPLETED = index => ({
   type: types.MAKE_COMPLETED,
   index
 });
+
+export const SET_FILTER = filter => ({
+  type: types.SET_FILTER,
+  filter
+});

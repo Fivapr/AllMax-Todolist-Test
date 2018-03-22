@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import * as actions from "./Actions";
 import { connect } from "react-redux";
-import AddTodo from "./AddTodo";
 
 const mapDispatchToProps = dispatch => ({
   deleteTodo: index => {
@@ -16,13 +15,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class Todo extends Component {
-  constructor() {
-    super();
-    this.state = {
-      todos: []
-    };
-  }
-
   handleDelete = () => {
     this.props.deleteTodo(this.props.index);
   };
@@ -32,26 +24,31 @@ class Todo extends Component {
   };
 
   render() {
+    const {
+      name,
+      description,
+      urgency,
+      dateUntil,
+      completed,
+      dateCompleted
+    } = this.props.todo;
+
     let fill =
-      this.props.todo.dateUntil < new Date().toISOString().slice(0, 16)
-        ? "red"
-        : "white";
-    console.log(fill);
-    fill = this.props.todo.completed ? "green" : fill;
-    console.log(fill);
+      dateUntil < new Date().toISOString().slice(0, 16) ? "red" : "white";
+    fill = completed ? "green" : fill;
 
     return (
       <li style={{ backgroundColor: fill }}>
         <div>
-          <span>{this.props.todo.name}</span>
+          <span>{name}</span>
           <span onClick={this.handleComplete}>Y</span>
           <span onClick={this.handleDelete}>X</span>
         </div>
-        <div>{this.props.todo.description}</div>
-        <div>{this.props.todo.urgency}</div>
-        <div>{this.props.todo.dateUntil}</div>
-        <div>{this.props.todo.completed ? "completed" : "not completed"}</div>
-        <div>{this.props.todo.dateCompleted}</div>
+        <div>{description}</div>
+        <div>{urgency}</div>
+        <div>{dateUntil}</div>
+        <div>{completed ? "completed" : "not completed"}</div>
+        <div>{dateCompleted}</div>
       </li>
     );
   }

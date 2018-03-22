@@ -1,6 +1,7 @@
 import * as types from "./ActionTypes.js";
 
 const initialState = {
+  filter: "all",
   todos: [
     {
       name: "first todo",
@@ -25,11 +26,12 @@ export const todosReducer = (state = initialState, action) => {
             description: action.todo.description,
             urgency: action.todo.urgency,
             dateUntil: action.todo.dateUntil,
-            completed: action.todo.completed,
-            dateCompleted: action.todo.dateCompleted
+            completed: false,
+            dateCompleted: null
           }
         ]
       };
+
     case types.DELETE_TODO:
       return {
         ...state,
@@ -38,6 +40,7 @@ export const todosReducer = (state = initialState, action) => {
           ...state.todos.slice(action.index + 1)
         ]
       };
+
     case types.CHANGE_TODO:
       return {
         ...state,
@@ -54,6 +57,7 @@ export const todosReducer = (state = initialState, action) => {
           ...state.todos.slice(action.index + 1)
         ]
       };
+
     case types.MAKE_COMPLETED:
       return {
         ...state,
@@ -67,6 +71,13 @@ export const todosReducer = (state = initialState, action) => {
           ...state.todos.slice(action.index + 1)
         ]
       };
+
+    case types.SET_FILTER:
+      return {
+        ...state,
+        filter: action.filter
+      };
+
     default:
       return state;
   }
