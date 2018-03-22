@@ -15,6 +15,11 @@ class AddTodo extends Component {
     };
   }
 
+  componentDidMount() {
+    console.log(this.props.todo);
+    this.props.todo && this.setState(this.props.todo);
+  }
+
   handleNameChange = e => {
     this.setState({ name: e.target.value });
   };
@@ -36,7 +41,9 @@ class AddTodo extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.addTodo(this.state);
+    this.props.changeTodo
+      ? this.props.changeTodo(this.state)
+      : this.props.addTodo(this.state);
   };
 
   render() {

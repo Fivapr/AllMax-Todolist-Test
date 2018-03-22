@@ -7,7 +7,6 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import App from "./App";
 import { loadState, saveState } from "./LocalStorage";
 
-const initialState = {};
 const persistedState = loadState();
 
 const store = createStore(rootReducer, persistedState, composeWithDevTools());
