@@ -34,7 +34,9 @@ class Todo extends Component {
     } = this.props.todo;
 
     let fill =
-      dateUntil < new Date().toISOString().slice(0, 16) ? "red" : "white";
+      dateUntil && dateUntil < new Date().toISOString().slice(0, 16)
+        ? "red"
+        : "white";
     fill = completed ? "green" : fill;
 
     return (
