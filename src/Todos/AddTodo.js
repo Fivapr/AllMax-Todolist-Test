@@ -28,7 +28,10 @@ class AddTodo extends Component {
   };
 
   handleDateUntilChange = e => {
-    this.setState({ dateUntil: e.target.value });
+    e.target.value &&
+      this.setState({
+        dateUntil: new Date(e.target.value).toISOString().slice(0, 16)
+      });
   };
 
   handleSubmit = e => {

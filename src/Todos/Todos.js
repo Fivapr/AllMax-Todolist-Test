@@ -5,7 +5,6 @@ import Todo from "./Todo";
 import Filters from "./Filters";
 
 const getVisibleTodos = (todos, filter) => {
-  console.log(todos, filter);
   switch (filter) {
     case "normal":
       return todos.filter(todo => {

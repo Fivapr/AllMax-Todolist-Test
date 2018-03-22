@@ -2,16 +2,7 @@ import * as types from "./ActionTypes.js";
 
 const initialState = {
   filter: "all",
-  todos: [
-    {
-      name: "first todo",
-      description: "asdasdasdasdasdasdasd",
-      urgency: "normal",
-      dateUntil: "1488",
-      completed: false,
-      dateCompleted: null
-    }
-  ]
+  todos: []
 };
 
 export const todosReducer = (state = initialState, action) => {
