@@ -1,8 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import React from "react";
+import { render } from "react-dom";
+import { createStore, applyMiddleware, compose } from "redux";
+import { Provider } from "react-redux";
+import { rootReducer } from "./RootReducer";
+import { composeWithDevTools } from "redux-devtools-extension";
+import App from "./App";
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+const initialState = {};
+
+const store = createStore(
+  rootReducer,
+  initialState,
+  composeWithDevTools(applyMiddleware())
+);
+
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
+);
