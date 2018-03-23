@@ -58,11 +58,14 @@ class Todo extends Component {
     fill = completed ? "green" : fill;
 
     const renderedDate = () => {
-      return dateUntil && <p>Up to: dateUntil.toString()</p>;
+      console.log(dateUntil);
+      return dateUntil && <p>Up to: {dateUntil.toString().slice(0, 16)}</p>;
     };
 
     const renderedCompletedDate = () => {
-      return completed && <p>Completed: dateCompleted.toString()</p>;
+      return (
+        completed && <p>Completed: {dateCompleted.toString().slice(0, 16)}</p>
+      );
     };
 
     return (
@@ -73,6 +76,7 @@ class Todo extends Component {
           actAsExpander={true}
           showExpandableButton={true}
         />
+
         <CardActions>
           <FlatButton
             onClick={this.toggleChangeFormVisibility}
@@ -81,10 +85,11 @@ class Todo extends Component {
           <FlatButton onClick={this.handleComplete} label="Complete" />
           <FlatButton onClick={this.handleDelete} label="Delete" />
         </CardActions>
+
         <CardText expandable={true}>
-          {description}
-          {renderedDate}
-          {renderedCompletedDate}
+          Description: {description}
+          {renderedDate()}
+          {renderedCompletedDate()}
         </CardText>
 
         {this.renderChangeForm()}

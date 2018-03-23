@@ -24,6 +24,7 @@ class Filters extends Component {
     return (
       <div>
         <SelectField
+          style={{ margin: 10 }}
           floatingLabelText="filter todos by urgency"
           value={this.state.filter}
           onChange={this.handleFilterChange}

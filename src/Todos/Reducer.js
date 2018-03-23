@@ -57,7 +57,7 @@ export const todosReducer = (state = initialState, action) => {
           {
             ...state.todos[action.index],
             completed: true,
-            dateCompleted: new Date().toISOString().slice(0, 16)
+            dateCompleted: new Date()
           },
           ...state.todos.slice(action.index + 1)
         ]

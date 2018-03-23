@@ -8,15 +8,15 @@ const getVisibleTodos = (todos, filter) => {
   switch (filter) {
     case "normal":
       return todos.filter(todo => {
-        return todo.urgency == "normal";
+        return todo.urgency === "normal";
       });
     case "urgent":
       return todos.filter(todo => {
-        return todo.urgency == "urgent";
+        return todo.urgency === "urgent";
       });
     case "most urgent":
       return todos.filter(todo => {
-        return todo.urgency == "most urgent";
+        return todo.urgency === "most urgent";
       });
     case "all":
     default:
