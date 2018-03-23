@@ -4,6 +4,7 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { rootReducer } from "./RootReducer";
 import { composeWithDevTools } from "redux-devtools-extension";
+import "./index.css";
 import App from "./App";
 import { loadState, saveState } from "./LocalStorage";
 

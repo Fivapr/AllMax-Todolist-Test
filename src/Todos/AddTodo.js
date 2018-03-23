@@ -38,15 +38,7 @@ class AddTodo extends Component {
   };
 
   handleDateUntilChange = (e, date) => {
-    // console.log(
-    //   date,
-    //   new Date(date),
-    //   new Date(date).toISOString().slice(0, 16)
-    // );
-
-    this.setState({
-      dateUntil: date
-    });
+    this.setState({ dateUntil: date });
   };
 
   handleSubmit = e => {
@@ -58,7 +50,7 @@ class AddTodo extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} style={{ margin: 10 }}>
         <TextField
           hintText="todo name"
           value={this.state.name}
@@ -97,7 +89,7 @@ class AddTodo extends Component {
           onChange={this.handleDateUntilChange}
         />
 
-        <RaisedButton label="Submit" fullWidth={true} type="submit" />
+        <RaisedButton label="Submit" type="submit" />
       </form>
     );
   }

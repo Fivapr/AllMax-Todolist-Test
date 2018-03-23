@@ -32,8 +32,8 @@ class Todos extends Component {
   render() {
     return (
       <div>
-        <AddTodo />
         <Filters />
+        <AddTodo />
         {this.props.todos.map((todo, index) => {
           return <Todo key={index} index={index} todo={todo} />;
         })}

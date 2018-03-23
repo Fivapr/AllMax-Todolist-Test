@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import * as actions from "./Actions";
 import { connect } from "react-redux";
 import AddTodo from "./AddTodo";
+import { Card, CardActions, CardHeader, CardText } from "material-ui/Card";
+import FlatButton from "material-ui/FlatButton";
 
 const mapDispatchToProps = dispatch => ({
   deleteTodo: index => {
@@ -55,23 +57,38 @@ class Todo extends Component {
     let fill = dateUntil && dateUntil < new Date() ? "red" : "white";
     fill = completed ? "green" : fill;
 
-    const renderedDate = dateUntil.toString();
+    const renderedDate = () => {
+      return dateUntil && <p>Up to: dateUntil.toString()</p>;
+    };
+
+    const renderedCompletedDate = () => {
+      return completed && <p>Completed: dateCompleted.toString()</p>;
+    };
 
     return (
-      <li style={{ backgroundColor: fill }}>
-        <div>
-          {this.renderChangeForm()}
-          <span>{name}</span>
-          <span onClick={this.handleComplete}>Y</span>
-          <span onClick={this.handleDelete}>X</span>
-          <span onClick={this.toggleChangeFormVisibility}>C</span>
-        </div>
-        <div>{description}</div>
-        <div>{urgency}</div>
-        <div>{renderedDate}</div>
-        <div>{completed ? "completed" : "not completed"}</div>
-        <div>{dateCompleted}</div>
-      </li>
+      <Card style={{ backgroundColor: fill, margin: 10, width: 400 }}>
+        <CardHeader
+          title={name}
+          subtitle={urgency}
+          actAsExpander={true}
+          showExpandableButton={true}
+        />
+        <CardActions>
+          <FlatButton
+            onClick={this.toggleChangeFormVisibility}
+            label="Change"
+          />
+          <FlatButton onClick={this.handleComplete} label="Complete" />
+          <FlatButton onClick={this.handleDelete} label="Delete" />
+        </CardActions>
+        <CardText expandable={true}>
+          {description}
+          {renderedDate}
+          {renderedCompletedDate}
+        </CardText>
+
+        {this.renderChangeForm()}
+      </Card>
     );
   }
 }
