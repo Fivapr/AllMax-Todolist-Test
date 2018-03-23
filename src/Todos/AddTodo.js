@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import * as actions from "./Actions";
 import { connect } from "react-redux";
+import TextField from "material-ui/TextField";
+import SelectField from "material-ui/SelectField";
+import MenuItem from "material-ui/MenuItem";
+import DatePicker from "material-ui/DatePicker";
+import TimePicker from "material-ui/TimePicker";
+import RaisedButton from "material-ui/RaisedButton";
 
 class AddTodo extends Component {
   constructor() {
@@ -9,14 +15,13 @@ class AddTodo extends Component {
       name: "",
       description: "",
       urgency: "normal",
-      dateUntil: "",
+      dateUntil: null,
       completed: false,
       dateCompleted: null
     };
   }
-
+  // Если компонент вызван с пропсом туду, то он вызван из существуещего туду и будет менять туду а не добавлять новый
   componentDidMount() {
-    console.log(this.props.todo);
     this.props.todo && this.setState(this.props.todo);
   }
 
@@ -28,15 +33,20 @@ class AddTodo extends Component {
     this.setState({ description: e.target.value });
   };
 
-  handleUrgencyChange = e => {
-    this.setState({ urgency: e.target.value });
+  handleUrgencyChange = (event, index, value) => {
+    this.setState({ urgency: value });
   };
 
-  handleDateUntilChange = e => {
-    e.target.value &&
-      this.setState({
-        dateUntil: new Date(e.target.value).toISOString().slice(0, 16)
-      });
+  handleDateUntilChange = (e, date) => {
+    // console.log(
+    //   date,
+    //   new Date(date),
+    //   new Date(date).toISOString().slice(0, 16)
+    // );
+
+    this.setState({
+      dateUntil: date
+    });
   };
 
   handleSubmit = e => {
@@ -49,36 +59,45 @@ class AddTodo extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <input
+        <TextField
+          hintText="todo name"
           value={this.state.name}
           onChange={this.handleNameChange}
-          placeholder="todo name"
         />
+        <br />
 
-        <input
+        <TextField
+          hintText="todo description"
           value={this.state.description}
           onChange={this.handleDescriptionChange}
-          placeholder="todo description"
         />
+        <br />
 
-        <select
+        <SelectField
+          floatingLabelText="todo urgency"
           value={this.state.urgency}
           onChange={this.handleUrgencyChange}
-          name="todo urgency"
         >
-          <option>normal</option>
-          <option>urgent</option>
-          <option>most urgent</option>
-        </select>
+          <MenuItem value={"normal"} primaryText="normal" />
+          <MenuItem value="urgent" primaryText="urgent" />
+          <MenuItem value={"most urgent"} primaryText="most urgent" />
+        </SelectField>
+        <br />
 
-        <input
-          value={this.state.DateUntil}
+        <DatePicker
+          hintText="date to do"
+          value={this.state.dateUntil}
           onChange={this.handleDateUntilChange}
-          type="datetime-local"
-          name="dateUntil"
         />
 
-        <input type="submit" value="submit" />
+        <TimePicker
+          format="24hr"
+          hintText="hour to do"
+          value={this.state.dateUntil}
+          onChange={this.handleDateUntilChange}
+        />
+
+        <RaisedButton label="Submit" fullWidth={true} type="submit" />
       </form>
     );
   }

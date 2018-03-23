@@ -52,11 +52,10 @@ class Todo extends Component {
       dateCompleted
     } = this.props.todo;
 
-    let fill =
-      dateUntil && dateUntil < new Date().toISOString().slice(0, 16)
-        ? "red"
-        : "white";
+    let fill = dateUntil && dateUntil < new Date() ? "red" : "white";
     fill = completed ? "green" : fill;
+
+    const renderedDate = dateUntil.toString();
 
     return (
       <li style={{ backgroundColor: fill }}>
@@ -69,7 +68,7 @@ class Todo extends Component {
         </div>
         <div>{description}</div>
         <div>{urgency}</div>
-        <div>{dateUntil}</div>
+        <div>{renderedDate}</div>
         <div>{completed ? "completed" : "not completed"}</div>
         <div>{dateCompleted}</div>
       </li>

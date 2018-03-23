@@ -23,15 +23,6 @@ export const todosReducer = (state = initialState, action) => {
         ]
       };
 
-    case types.DELETE_TODO:
-      return {
-        ...state,
-        todos: [
-          ...state.todos.slice(0, action.index),
-          ...state.todos.slice(action.index + 1)
-        ]
-      };
-
     case types.CHANGE_TODO:
       return {
         ...state,
@@ -45,6 +36,15 @@ export const todosReducer = (state = initialState, action) => {
             completed: action.todo.completed,
             dateCompleted: action.todo.dateCompleted
           },
+          ...state.todos.slice(action.index + 1)
+        ]
+      };
+
+    case types.DELETE_TODO:
+      return {
+        ...state,
+        todos: [
+          ...state.todos.slice(0, action.index),
           ...state.todos.slice(action.index + 1)
         ]
       };

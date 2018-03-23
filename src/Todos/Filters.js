@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import * as actions from "./Actions";
 import { connect } from "react-redux";
+import SelectField from "material-ui/SelectField";
+import MenuItem from "material-ui/MenuItem";
 
 const mapDispatchToProps = dispatch => ({
   setFilter: filter => {
@@ -14,21 +16,25 @@ class Filters extends Component {
     this.state = { filter: "all" };
   }
 
-  handleFilterChange = e => {
-    this.setState(
-      { filter: e.target.value },
-      this.props.setFilter(e.target.value)
-    );
+  handleFilterChange = (event, index, value) => {
+    this.setState({ filter: value }, this.props.setFilter(value));
   };
 
   render() {
     return (
-      <select value={this.state.filter} onChange={this.handleFilterChange}>
-        <option>all</option>
-        <option>normal</option>
-        <option>urgent</option>
-        <option>most urgent</option>
-      </select>
+      <div>
+        <SelectField
+          floatingLabelText="filter todos by urgency"
+          value={this.state.filter}
+          onChange={this.handleFilterChange}
+        >
+          <MenuItem value={"all"} primaryText="all" />
+          <MenuItem value={"normal"} primaryText="normal" />
+          <MenuItem value={"urgent"} primaryText="urgent" />
+          <MenuItem value={"most urgent"} primaryText="most urgent" />
+        </SelectField>
+        <br />
+      </div>
     );
   }
 }
