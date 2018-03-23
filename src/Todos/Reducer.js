@@ -5,6 +5,7 @@ const initialState = {
   todos: []
 };
 
+//getTime() after any Date object to make data serializable
 export const todosReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.ADD_TODO:
@@ -16,7 +17,7 @@ export const todosReducer = (state = initialState, action) => {
             name: action.todo.name,
             description: action.todo.description,
             urgency: action.todo.urgency,
-            dateUntil: action.todo.dateUntil,
+            dateUntil: action.todo.dateUntil.getTime(),
             completed: false,
             dateCompleted: null
           }
@@ -32,7 +33,7 @@ export const todosReducer = (state = initialState, action) => {
             name: action.todo.name,
             description: action.todo.description,
             urgency: action.todo.urgency,
-            dateUntil: action.todo.dateUntil,
+            dateUntil: action.todo.dateUntil.getTime(),
             completed: action.todo.completed,
             dateCompleted: action.todo.dateCompleted
           },
@@ -57,7 +58,7 @@ export const todosReducer = (state = initialState, action) => {
           {
             ...state.todos[action.index],
             completed: true,
-            dateCompleted: new Date()
+            dateCompleted: new Date().getTime()
           },
           ...state.todos.slice(action.index + 1)
         ]

@@ -31,17 +31,18 @@ class Todo extends Component {
     this.props.makeCompleted(this.props.index);
   };
 
-  toggleChangeFormVisibility = () => {
+  toggleChangeMenu = () => {
     this.setState({ formVisibility: !this.state.formVisibility });
+  };
+
+  changeTodo = todo => {
+    this.props.changeTodo(todo, this.props.index);
+    this.toggleChangeMenu();
   };
 
   renderChangeForm = () => {
     if (this.state.formVisibility)
       return <AddTodo changeTodo={this.changeTodo} todo={this.props.todo} />;
-  };
-
-  changeTodo = todo => {
-    this.props.changeTodo(todo, this.props.index);
   };
 
   render() {
@@ -54,17 +55,20 @@ class Todo extends Component {
       dateCompleted
     } = this.props.todo;
 
-    let fill = dateUntil && dateUntil < new Date() ? "red" : "white";
+    let fill = dateUntil && new Date(dateUntil) < new Date() ? "red" : "white";
     fill = completed ? "green" : fill;
 
     const renderedDate = () => {
-      console.log(dateUntil);
-      return dateUntil && <p>Up to: {dateUntil.toString().slice(0, 16)}</p>;
+      return (
+        dateUntil && <p>Up to: {new Date(dateUntil).toString().slice(0, 16)}</p>
+      );
     };
 
     const renderedCompletedDate = () => {
       return (
-        completed && <p>Completed: {dateCompleted.toString().slice(0, 16)}</p>
+        completed && (
+          <p>Completed: {new Date(dateCompleted).toString().slice(0, 16)}</p>
+        )
       );
     };
 
@@ -78,10 +82,7 @@ class Todo extends Component {
         />
 
         <CardActions>
-          <FlatButton
-            onClick={this.toggleChangeFormVisibility}
-            label="Change"
-          />
+          <FlatButton onClick={this.toggleChangeMenu} label="Change" />
           <FlatButton onClick={this.handleComplete} label="Complete" />
           <FlatButton onClick={this.handleDelete} label="Delete" />
         </CardActions>

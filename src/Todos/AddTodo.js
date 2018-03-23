@@ -20,10 +20,24 @@ class AddTodo extends Component {
       dateCompleted: null
     };
   }
-  // Если компонент вызван с пропсом туду, то он вызван из существуещего туду и будет менять туду а не добавлять новый
+
+  // Если компонент вызван с пропсом туду, то он вызван из существуещего туду и будет менять существующий туду а не добавлять новый
+  // Дата в сторе это число, а здесь объект, чтобы его нормально воспринимал датапикер
   componentDidMount() {
-    this.props.todo && this.setState(this.props.todo);
+    this.props.todo &&
+      this.setState({
+        ...this.props.todo,
+        dateUntil: new Date(this.props.todo.dateUntil),
+        dateCompleted: new Date(this.props.todo.dateCompleted)
+      });
   }
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.changeTodo
+      ? this.props.changeTodo(this.state)
+      : this.props.addTodo(this.state);
+  };
 
   handleNameChange = e => {
     this.setState({ name: e.target.value });
@@ -39,13 +53,6 @@ class AddTodo extends Component {
 
   handleDateUntilChange = (e, date) => {
     this.setState({ dateUntil: date });
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
-    this.props.changeTodo
-      ? this.props.changeTodo(this.state)
-      : this.props.addTodo(this.state);
   };
 
   render() {
