@@ -27,6 +27,7 @@ class Todo extends Component {
     this.props.deleteTodo(this.props.index);
   };
 
+  //сделал так, что работает только в одну сторону, хотя наверное стоило тогглом
   handleComplete = () => {
     this.props.makeCompleted(this.props.index);
   };
@@ -40,11 +41,6 @@ class Todo extends Component {
     this.toggleChangeMenu();
   };
 
-  renderChangeForm = () => {
-    if (this.state.formVisibility)
-      return <AddTodo changeTodo={this.changeTodo} todo={this.props.todo} />;
-  };
-
   render() {
     const {
       name,
@@ -55,47 +51,47 @@ class Todo extends Component {
       dateCompleted
     } = this.props.todo;
 
+    // туду просрочен = red, выполнен = green
     let fill = dateUntil && new Date(dateUntil) < new Date() ? "red" : "white";
     fill = completed ? "green" : fill;
 
-    const renderedDate = () => {
+    const renderChangeForm = () => {
+      if (this.state.formVisibility)
+        return <AddTodo changeTodo={this.changeTodo} todo={this.props.todo} />;
+    };
+
+    const renderTodoCard = () => {
       return (
-        dateUntil && <p>Up to: {new Date(dateUntil).toString().slice(0, 16)}</p>
+        <Card style={{ backgroundColor: fill, margin: 10, width: 400 }}>
+          <CardHeader
+            title={name}
+            subtitle={urgency}
+            actAsExpander={true}
+            showExpandableButton={true}
+          />
+          <CardActions>
+            <FlatButton onClick={this.toggleChangeMenu} label="Change" />
+            <FlatButton onClick={this.handleComplete} label="Complete" />
+            <FlatButton onClick={this.handleDelete} label="Delete" />
+          </CardActions>
+          //dateUntil and dateCompleted are put in state as numbers
+          <CardText expandable={true}>
+            <p>Description: {description}</p>
+            {dateUntil && (
+              <p>Up to: {new Date(dateUntil).toString().slice(0, 16)}</p>
+            )}
+            {completed && (
+              <p>
+                Completed: {new Date(dateCompleted).toString().slice(0, 16)}
+              </p>
+            )}
+          </CardText>
+        </Card>
       );
     };
 
-    const renderedCompletedDate = () => {
-      return (
-        completed && (
-          <p>Completed: {new Date(dateCompleted).toString().slice(0, 16)}</p>
-        )
-      );
-    };
-
-    return (
-      <Card style={{ backgroundColor: fill, margin: 10, width: 400 }}>
-        <CardHeader
-          title={name}
-          subtitle={urgency}
-          actAsExpander={true}
-          showExpandableButton={true}
-        />
-
-        <CardActions>
-          <FlatButton onClick={this.toggleChangeMenu} label="Change" />
-          <FlatButton onClick={this.handleComplete} label="Complete" />
-          <FlatButton onClick={this.handleDelete} label="Delete" />
-        </CardActions>
-
-        <CardText expandable={true}>
-          Description: {description}
-          {renderedDate()}
-          {renderedCompletedDate()}
-        </CardText>
-
-        {this.renderChangeForm()}
-      </Card>
-    );
+    //change mode on/off
+    return this.state.formVisibility ? renderChangeForm() : renderTodoCard();
   }
 }
 

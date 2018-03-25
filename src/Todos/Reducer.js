@@ -5,7 +5,8 @@ const initialState = {
   todos: []
 };
 
-//getTime() after any Date object to make data serializable
+//getTime() after any Date object to make data serializable (for localStorage JSON)
+//Осторожно, даты могут быть null, если не указаны пользователем
 export const todosReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.ADD_TODO:
@@ -17,7 +18,7 @@ export const todosReducer = (state = initialState, action) => {
             name: action.todo.name,
             description: action.todo.description,
             urgency: action.todo.urgency,
-            dateUntil: action.todo.dateUntil.getTime(),
+            dateUntil: action.todo.dateUntil && action.todo.dateUntil.getTime(),
             completed: false,
             dateCompleted: null
           }
@@ -33,7 +34,7 @@ export const todosReducer = (state = initialState, action) => {
             name: action.todo.name,
             description: action.todo.description,
             urgency: action.todo.urgency,
-            dateUntil: action.todo.dateUntil.getTime(),
+            dateUntil: action.todo.dateUntil && action.todo.dateUntil.getTime(),
             completed: action.todo.completed,
             dateCompleted: action.todo.dateCompleted
           },

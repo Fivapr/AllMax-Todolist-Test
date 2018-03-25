@@ -22,7 +22,7 @@ class Filters extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ margin: "0 auto", width: 256 }}>
         <SelectField
           style={{ margin: 10 }}
           floatingLabelText="filter todos by urgency"

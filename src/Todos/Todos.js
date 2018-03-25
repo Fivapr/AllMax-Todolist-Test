@@ -32,11 +32,22 @@ class Todos extends Component {
   render() {
     return (
       <div>
-        <Filters />
-        <AddTodo />
-        {this.props.todos.map((todo, index) => {
-          return <Todo key={index} index={index} todo={todo} />;
-        })}
+        <div style={{ margin: "0 auto", width: 400 }}>
+          <Filters />
+          <AddTodo />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-around",
+            alignItems: "flex-start"
+          }}
+        >
+          {this.props.todos.map((todo, index) => {
+            return <Todo key={index} index={index} todo={todo} />;
+          })}
+        </div>
       </div>
     );
   }
